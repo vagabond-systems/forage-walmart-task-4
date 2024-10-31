@@ -1,4 +1,6 @@
 from fpdf import FPDF
+import pandas as pd
+import sqlite3
 
 # Code to be added to the PDF
 code_text = """
@@ -48,17 +50,18 @@ df0.to_sql('shipping_data_0', conn, if_exists='append', index=False)
 
 #---Inserting combined data into shipping_data_1 table
 for index, row in df_combined.iterrows():
-# commented because causing error
-    cursor.execute("""
-        # INSERT INTO shipping_data_1 (shipment_identifier, product, on_time, origin_warehouse, destination_store, driver_identifier, quantity)
-        # VALUES (?, ?, ?, ?, ?, ?, ?)    """, (row['shipment_identifier'], row['product'], row['on_time'], row['origin_warehouse'], row['destination_store'], row['driver_identifier'], row['total_quantity']))
+    cursor.execute(
+        # INSERT INTO shipping_data_1 (shipment_identifier, 
+        #                              product, on_time, origin_warehouse, destination_store, driver_identifier, quantity)
+        # VALUES (?, ?, ?, ?, ?, ?, ?) 
+        #  (row['shipment_identifier'], row['product'], row['on_time'], row['origin_warehouse'], row['destination_store'], row['driver_identifier'], row['total_quantity']))
 
 #---Commiting and close connection
-# conn.commit()
-# conn.close()
+conn.commit()
+conn.close()
 
 print("Data inserted successfully!")
-
+"""
 
 # Creating a PDF object
 pdf = FPDF()
